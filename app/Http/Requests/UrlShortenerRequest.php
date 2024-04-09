@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Ariaieboy\LaravelSafeBrowsing\Facades\LaravelSafeBrowsing;
 use Illuminate\Foundation\Http\FormRequest;
+use Closure;
 
 class UrlShortenerRequest extends FormRequest
 {
@@ -22,7 +24,21 @@ class UrlShortenerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'url' => 'required|url'
+            'url' => [
+                'required',
+                'url',
+                function (string $attribute, mixed $value, Closure $fail) {
+                    try {
+                        $isSafe = LaravelSafeBrowsing::isSafeUrl($value);
+                    } catch (\Throwable $th) {
+                        $isSafe = false;
+                    }
+
+                    if ($isSafe !== true) {
+                        $fail("The {$attribute} is unsafe.");
+                    }
+                }
+            ]
         ];
     }
 }
