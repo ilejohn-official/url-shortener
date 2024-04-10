@@ -26,8 +26,12 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/url-shortener', [UrlController::class, 'edit'])->name('url.edit');
-Route::post('/url-shortener', [UrlController::class, 'shorten'])->name('url.shorten');
+Route::controller(UrlController::class)->group(function () {
+    Route::get('/url-shortener', 'edit')->name('url.edit');
+    Route::post('/url-shortener', 'shorten')->name('url.shorten');
+    Route::get('/{hash}', 'redirect')->whereAlphaNumeric('hash')->name('url.redirect');
+    Route::get('/something/{hash}', 'redirect')->whereAlphaNumeric('hash');
+});
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
