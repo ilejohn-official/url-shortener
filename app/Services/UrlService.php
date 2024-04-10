@@ -4,9 +4,9 @@ namespace App\Services;
 
 use App\Models\Url;
 
-class UrlService 
+class UrlService
 {
-    public function getOriginalurl(string $hash): string|null
+    public function getOriginalurl(string $hash): ?string
     {
         return Url::firstWhere('short_url_hash', $hash)?->url;
     }
@@ -33,16 +33,16 @@ class UrlService
 
             $isUnique = ! Url::where('short_url_hash', $randomString)->exists();
 
-        } while (!$isUnique);
+        } while (! $isUnique);
 
         return $this->storeShortenedUrl($url, $randomString);
     }
 
-    private function checkForDuplicate($url): string|null
+    private function checkForDuplicate($url): ?string
     {
         $shortenedUrl = Url::firstWhere('url', $url);
 
-        if ($shortenedUrl){
+        if ($shortenedUrl) {
             return $shortenedUrl->short_url;
         }
 
@@ -53,7 +53,7 @@ class UrlService
     {
         $urlModel = Url::create([
             'url' => $url,
-            'short_url_hash' => $hash
+            'short_url_hash' => $hash,
         ]);
 
         return $urlModel->short_url;

@@ -33,5 +33,5 @@ Route::controller(UrlController::class)->group(function () {
     //Add any folder structure as prefix and the short url would work!
     Route::prefix('folder')->group(function () {
         Route::get('/{hash}', 'redirect')->whereAlphaNumeric('hash')->name('url.folder.redirect');
-    }); 
+    });
 });

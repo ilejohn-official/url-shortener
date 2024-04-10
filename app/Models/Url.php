@@ -25,7 +25,7 @@ class Url extends Model
     protected function shortUrl(): Attribute
     {
         return new Attribute(
-            get: fn () => config('app.url') . '/' . $this->short_url_hash,
+            get: fn () => config('app.url').'/'.$this->short_url_hash,
         );
     }
 }

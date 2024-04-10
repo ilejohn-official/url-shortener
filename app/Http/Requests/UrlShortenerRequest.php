@@ -3,8 +3,8 @@
 namespace App\Http\Requests;
 
 use Ariaieboy\LaravelSafeBrowsing\Facades\LaravelSafeBrowsing;
-use Illuminate\Foundation\Http\FormRequest;
 use Closure;
+use Illuminate\Foundation\Http\FormRequest;
 
 class UrlShortenerRequest extends FormRequest
 {
@@ -37,8 +37,8 @@ class UrlShortenerRequest extends FormRequest
                     if ($isSafe !== true) {
                         $fail("The {$attribute} is unsafe.");
                     }
-                }
-            ]
+                },
+            ],
         ];
     }
 }

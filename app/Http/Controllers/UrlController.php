@@ -8,11 +8,10 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
+
 class UrlController extends Controller
 {
-
     protected $urlService;
-
 
     public function __construct(UrlService $urlService)
     {
@@ -39,9 +38,9 @@ class UrlController extends Controller
         return Inertia::render('Url/Shortener', [
             'data' => [
                 'url' => $url,
-                'short_url' => $shortenedUrl
+                'short_url' => $shortenedUrl,
             ],
-            'status' => 'url-shortened'
+            'status' => 'url-shortened',
         ]);
     }
 
@@ -52,7 +51,7 @@ class UrlController extends Controller
     {
         $originalUrl = $this->urlService->getOriginalurl($hash);
 
-        if(empty($originalUrl)) {
+        if (empty($originalUrl)) {
             throw new ModelNotFoundException;
         }
 
