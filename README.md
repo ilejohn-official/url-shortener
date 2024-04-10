@@ -68,3 +68,4 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 ## Setup
 
 set google api key as `SAFEBROWSING_GOOGLE_API_KEY` in env.
+set `APP_URL` correctly based on environment
