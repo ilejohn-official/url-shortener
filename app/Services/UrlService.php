@@ -27,13 +27,13 @@ class UrlService
                 $randomString .= $characters[ord($randomBytes[$i]) % strlen($characters)];
             }
 
-            $isUnique = ! Url::where('short_url', $baseUrl . $randomString)->exists();
+            $isUnique = ! Url::where('short_url_hash', $randomString)->exists();
 
         } while (!$isUnique);
 
         $shortenedUrl = $baseUrl . $randomString;
 
-        $this->storeShortenedUrl($url, $shortenedUrl);
+        $this->storeShortenedUrl($url, $shortenedUrl, $randomString);
 
         return $shortenedUrl;
     }
@@ -49,11 +49,12 @@ class UrlService
         return null;
     }
 
-    private function storeShortenedUrl($url, $shortenedUrl): void
+    private function storeShortenedUrl(string $url, string $shortenedUrl, string $hash): void
     {
         Url::create([
             'url' => $url,
-            'short_url' => $shortenedUrl
+            'short_url' => $shortenedUrl,
+            'short_url_hash' => $hash
         ]);
     }
 }

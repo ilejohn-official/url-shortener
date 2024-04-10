@@ -9,5 +9,5 @@ class Url extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['url', 'short_url'];
+    protected $fillable = ['url', 'short_url', 'short_url_hash'];
 }

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('url');
             $table->string('short_url')->unique();
+            $table->string('short_url_hash')->unique();
             $table->timestamps();
         });
     }
