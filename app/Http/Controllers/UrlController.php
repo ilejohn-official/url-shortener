@@ -2,14 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Url;
 use App\Http\Requests\UrlShortenerRequest;
+use App\Services\UrlService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-
 class UrlController extends Controller
 {
+
+    protected $urlService;
+
+
+    public function __construct(UrlService $urlService)
+    {
+        $this->urlService = $urlService;
+    }
+
     /**
      * Display the url shortener form.
      */
@@ -25,26 +33,14 @@ class UrlController extends Controller
     {
         $url = $request->url;
 
-        $shortenedUrl = Url::firstWhere('url', $url);
+        $shortenedUrl = $this->urlService->shortenUrl($url);
 
-        if ($shortenedUrl){
-            $data = [
-                'data' => [
-                    'url' => $shortenedUrl->url,
-                    'shortened_url' => $shortenedUrl->shortened_url
-                ],
-                'status' => 'url-shortened'
-            ];
-        }
-
-        $data = [
+        return Inertia::render('Url/Shortener', [
             'data' => [
-                'url' => '$shortenedUrl->url',
-                'shortened_url' => '$shortenedUrl->shortened_url'
+                'url' => $url,
+                'short_url' => $shortenedUrl
             ],
             'status' => 'url-shortened'
-        ];
-
-        return Inertia::render('Url/Shortener', $data);
+        ]);
     }
 }
