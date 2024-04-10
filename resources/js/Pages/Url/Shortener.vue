@@ -89,7 +89,7 @@ const submit = () => {
                             {{ data.url }}
                         </th>
                         <td class="px-6 py-2 whitespace-nowrap dark:text-white">
-                            {{ data.shortened_url }}
+                            {{ data.short_url }}
                         </td>
                     </tr>
                 </tbody>
