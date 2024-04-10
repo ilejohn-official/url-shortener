@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+import Layout from '@/Layouts/Layout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -54,7 +54,7 @@ const submit = () => {
 </script>
 
 <template>
-    <GuestLayout>
+    <Layout>
         <Head title="Url Shortener" />
 
         <div v-if="urlShortened" class="mb-4 font-medium text-sm text-green-600">
@@ -69,7 +69,6 @@ const submit = () => {
                 <span>Go back</span>
             </button>
         </div>
-        
 
         <div v-if="showData" class="relative overflow-x-auto mb-4">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -119,7 +118,6 @@ const submit = () => {
                     Shorten
                 </PrimaryButton>
             </div>
-        </form>
-       
-    </GuestLayout>
+        </form> 
+    </Layout>
 </template>
