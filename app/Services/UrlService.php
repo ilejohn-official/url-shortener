@@ -6,6 +6,11 @@ use App\Models\Url;
 
 class UrlService 
 {
+    public function getOriginalurl(string $hash): string|null
+    {
+        return Url::firstWhere('short_url_hash', $hash)?->url;
+    }
+
     public function shortenUrl(string $url): string
     {
 
@@ -17,7 +22,7 @@ class UrlService
 
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $length = 6;
-        $baseUrl = 'https://example.com/';
+        $baseUrl = config('app.url') . '/';
 
         do {
             $randomBytes = random_bytes($length);

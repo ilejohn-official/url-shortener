@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UrlShortenerRequest;
 use App\Services\UrlService;
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 class UrlController extends Controller
@@ -21,7 +22,7 @@ class UrlController extends Controller
     /**
      * Display the url shortener form.
      */
-    public function edit(Request $request): Response
+    public function edit(): Response
     {
         return Inertia::render('Url/Shortener');
     }
@@ -42,5 +43,19 @@ class UrlController extends Controller
             ],
             'status' => 'url-shortened'
         ]);
+    }
+
+    /**
+     * Redirect to original url
+     */
+    public function redirect(string $hash): RedirectResponse
+    {
+        $originalUrl = $this->urlService->getOriginalurl($hash);
+
+        if(empty($originalUrl)) {
+            throw new ModelNotFoundException;
+        }
+
+        return redirect()->away($originalUrl);
     }
 }
