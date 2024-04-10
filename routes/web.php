@@ -30,7 +30,11 @@ Route::controller(UrlController::class)->group(function () {
     Route::get('/url-shortener', 'edit')->name('url.edit');
     Route::post('/url-shortener', 'shorten')->name('url.shorten');
     Route::get('/{hash}', 'redirect')->whereAlphaNumeric('hash')->name('url.redirect');
-    Route::get('/something/{hash}', 'redirect')->whereAlphaNumeric('hash');
+
+    //Add any folder structure as prefix and the short url would work!
+    Route::prefix('folder')->group(function () {
+        Route::get('/{hash}', 'redirect')->whereAlphaNumeric('hash')->name('url.folder.redirect');
+    }); 
 });
 
 Route::get('/dashboard', function () {
