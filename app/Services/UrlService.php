@@ -22,7 +22,6 @@ class UrlService
 
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $length = 6;
-        $baseUrl = config('app.url') . '/';
 
         do {
             $randomBytes = random_bytes($length);
@@ -36,11 +35,7 @@ class UrlService
 
         } while (!$isUnique);
 
-        $shortenedUrl = $baseUrl . $randomString;
-
-        $this->storeShortenedUrl($url, $shortenedUrl, $randomString);
-
-        return $shortenedUrl;
+        return $this->storeShortenedUrl($url, $randomString);
     }
 
     private function checkForDuplicate($url): string|null
@@ -54,12 +49,13 @@ class UrlService
         return null;
     }
 
-    private function storeShortenedUrl(string $url, string $shortenedUrl, string $hash): void
+    private function storeShortenedUrl(string $url, string $hash): string
     {
-        Url::create([
+        $urlModel = Url::create([
             'url' => $url,
-            'short_url' => $shortenedUrl,
             'short_url_hash' => $hash
         ]);
+
+        return $urlModel->short_url;
     }
 }
