@@ -102,7 +102,7 @@ const submit = () => {
 
                 <TextInput
                     id="url"
-                    
+                    type="url"
                     class="mt-1 block w-full"
                     placeholder="Enter url"
                     v-model="form.url"
