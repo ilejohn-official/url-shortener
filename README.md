@@ -54,3 +54,7 @@ This project creates a webpage prototype for URLs shortener.
   ```
   php artisan serve
   ```
+
+  ```
+  npm run dev
+  ```
