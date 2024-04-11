@@ -6,14 +6,8 @@ use App\Models\Url;
 
 class UrlService
 {
-    public function getOriginalurl(string $hash): ?string
-    {
-        return Url::firstWhere('short_url_hash', $hash)?->url;
-    }
-
     public function shortenUrl(string $url): string
     {
-
         $existingShortenedUrl = $this->checkForDuplicate($url);
 
         if ($existingShortenedUrl) {

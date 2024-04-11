@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UrlShortenerRequest;
+use App\Models\Url;
 use App\Services\UrlService;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -47,14 +47,8 @@ class UrlController extends Controller
     /**
      * Redirect to original url
      */
-    public function redirect(string $hash): RedirectResponse
+    public function redirect(Url $hash): RedirectResponse
     {
-        $originalUrl = $this->urlService->getOriginalurl($hash);
-
-        if (empty($originalUrl)) {
-            throw new ModelNotFoundException;
-        }
-
-        return redirect()->away($originalUrl);
+        return redirect()->away($hash->url);
     }
 }
